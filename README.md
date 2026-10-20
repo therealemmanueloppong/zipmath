@@ -1,14 +1,21 @@
 # ZipMath
 
-Mental-math shortcuts in your pocket. ZipMath is a mobile and web app that teaches fast mental-math tricks (squaring numbers ending in 5, multiplying by 11, divisibility rules, and more) with searchable shortcuts and worked examples.
+Mental-math shortcuts in your pocket, taught like a game. ZipMath walks you through themed worlds (Multiply Magic, Square City, Percent Peaks, Divisibility Desert), one short lesson and one practice round per level, with XP, daily streaks, hearts, stars, and animations.
 
-## Status
+## Features
 
-Early MVP. Searchable shortcut list is working. Practice mode, tests, and store releases are in progress.
+- Worlds and levels that unlock in order, shown as a winding path
+- Bite-size animated lessons, then 5 generated practice questions per level (answers are computed in code, so they are always correct)
+- 3 hearts, 1 to 3 stars per level, XP, and a daily streak saved on the device
+- Searchable cheat sheet of all shortcuts
 
 ## Tech
 
-React Native (Expo), TypeScript.
+React Native (Expo), TypeScript, the built-in Animated API, AsyncStorage for progress, Expo Haptics.
+
+## Status
+
+Playable prototype. Tests, CI, and store releases are in progress.
 
 ## Run it
 
