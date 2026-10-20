@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "math-shortcuts-app",
-    "slug": "math-shortcuts-app",
+    "name": "ZipMath",
+    "slug": "zipmath",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

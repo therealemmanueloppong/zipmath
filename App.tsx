@@ -13,7 +13,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <Text style={styles.heading}>Math Shortcuts</Text>
+      <Text style={styles.heading}>ZipMath</Text>
       <TextInput
         style={styles.search}
         placeholder="Search shortcuts"
