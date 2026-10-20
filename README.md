@@ -1,5 +1,7 @@
 # ZipMath
 
+**[Try the live web demo](https://therealemmanueloppong.github.io/zipmath/)** (best on a phone-sized window; progress is saved in your browser).
+
 Mental-math shortcuts in your pocket, taught like a game. ZipMath walks you through themed worlds (Multiply Magic, Square City, Percent Peaks, Divisibility Desert), one short lesson and one practice round per level, with XP, daily streaks, hearts, stars, and animations.
 
 ## Features
@@ -29,3 +31,7 @@ npx expo start
 ```
 
 Open the app with Expo Go on your phone, or press `w` for the web version.
+
+## Web demo
+
+The web version is built with `npx expo export --platform web` and published to GitHub Pages by `.github/workflows/pages.yml` on every push to `main`. It uses the same code as the phone app. Animations and saved progress work in the browser; haptic feedback does not.

@@ -19,7 +19,17 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "bundler": "metro",
+      "output": "single",
+      "favicon": "./assets/favicon.png",
+      "backgroundColor": "#131F24",
+      "name": "ZipMath",
+      "shortName": "ZipMath",
+      "themeColor": "#131F24"
+    },
+    "experiments": {
+      "baseUrl": "/zipmath"
+    },
+    "description": "ZipMath teaches mental-math shortcuts through short lessons and game-style practice."
   }
 }

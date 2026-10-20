@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, Platform, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { ProgressProvider, useProgress } from "./src/progress";
 import { CheatSheetScreen } from "./src/screens/CheatSheetScreen";
@@ -73,13 +73,27 @@ function Root() {
   }
 }
 
+// On the web the app is shown in a centered, phone-width column so it does not stretch across a wide screen.
+const webFrame = {
+  flex: 1,
+  alignItems: "center" as const,
+  backgroundColor: "#0B1418",
+};
+const webColumn = { flex: 1, width: "100%" as const, maxWidth: 480, backgroundColor: colors.bg };
+
 export default function App() {
-  return (
+  const content = (
     <SafeAreaProvider>
       <ProgressProvider>
         <StatusBar style="light" />
         <Root />
       </ProgressProvider>
     </SafeAreaProvider>
+  );
+  if (Platform.OS !== "web") return content;
+  return (
+    <View style={webFrame}>
+      <View style={webColumn}>{content}</View>
+    </View>
   );
 }
