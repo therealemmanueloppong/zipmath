@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Animated, Easing, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Level, World, worlds } from "../content";
+import { Level, Tier, World, findLevel, tierLevels, tiers } from "../content";
 import { useProgress } from "../progress";
 import { colors, radius } from "../theme";
 
@@ -66,6 +66,12 @@ type Props = {
 export function MapScreen({ onOpenLevel, onOpenCheatSheet }: Props) {
   const insets = useSafeAreaInsets();
   const { xp, streak, stars, isUnlocked, currentLevelId } = useProgress();
+  const [tierId, setTierId] = useState<Tier["id"]>(() =>
+    currentLevelId ? findLevel(currentLevelId).tier.id : tiers[tiers.length - 1].id
+  );
+  const tier = tiers.find((t) => t.id === tierId) as Tier;
+  const tierUnlocked = isUnlocked(tierLevels(tier)[0].id);
+  const previousTier = tiers[tiers.indexOf(tier) - 1];
 
   return (
     <View style={styles.container}>
@@ -80,8 +86,40 @@ export function MapScreen({ onOpenLevel, onOpenCheatSheet }: Props) {
         </View>
       </View>
 
+      <View style={styles.tabs}>
+        {tiers.map((t) => {
+          const levels = tierLevels(t);
+          const done = levels.filter((l) => stars[l.id] !== undefined).length;
+          const open = isUnlocked(levels[0].id);
+          const active = t.id === tierId;
+          return (
+            <Pressable key={t.id} style={{ flex: 1 }} onPress={() => setTierId(t.id)}>
+              <View
+                style={[
+                  styles.tab,
+                  active && { borderColor: t.color, backgroundColor: colors.card },
+                ]}
+              >
+                <Text style={styles.tabIcon}>{open ? t.icon : "🔒"}</Text>
+                <Text style={[styles.tabTitle, active && { color: t.color }]}>{t.title}</Text>
+                <Text style={styles.tabCount}>
+                  {done}/{levels.length}
+                </Text>
+              </View>
+            </Pressable>
+          );
+        })}
+      </View>
+
       <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom + 40 }}>
-        {worlds.map((world) => (
+        {!tierUnlocked && previousTier && (
+          <View style={styles.lockedNote}>
+            <Text style={styles.lockedText}>
+              🔒 Finish every level in {previousTier.title} to unlock {tier.title}.
+            </Text>
+          </View>
+        )}
+        {tier.worlds.map((world) => (
           <View key={world.id}>
             <View style={[styles.worldBanner, { backgroundColor: world.color, borderBottomColor: world.colorDark }]}>
               <Text style={styles.worldTitle}>{world.title}</Text>
@@ -123,6 +161,27 @@ const styles = StyleSheet.create({
   brand: { color: colors.green, fontSize: 24, fontWeight: "900" },
   stats: { flexDirection: "row", gap: 16, alignItems: "center" },
   stat: { color: colors.text, fontSize: 18, fontWeight: "800" },
+  tabs: { flexDirection: "row", gap: 8, paddingHorizontal: 12, paddingVertical: 10 },
+  tab: {
+    alignItems: "center",
+    paddingVertical: 8,
+    borderRadius: radius.md,
+    borderWidth: 2,
+    borderColor: colors.border,
+  },
+  tabIcon: { fontSize: 18 },
+  tabTitle: { color: colors.muted, fontWeight: "900", fontSize: 13, marginTop: 2 },
+  tabCount: { color: colors.muted, fontWeight: "700", fontSize: 11, marginTop: 1 },
+  lockedNote: {
+    marginHorizontal: 16,
+    marginTop: 8,
+    padding: 12,
+    borderRadius: radius.md,
+    backgroundColor: colors.card,
+    borderWidth: 2,
+    borderColor: colors.border,
+  },
+  lockedText: { color: colors.muted, fontWeight: "700", textAlign: "center" },
   worldBanner: {
     margin: 16,
     padding: 16,

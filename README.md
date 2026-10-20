@@ -9,6 +9,10 @@ Mental-math shortcuts in your pocket, taught like a game. ZipMath walks you thro
 - 3 hearts, 1 to 3 stars per level, XP, and a daily streak saved on the device
 - Searchable cheat sheet of all shortcuts
 
+## How content is organized
+
+Three tiers (Basic, Intermediate, Advanced) each contain worlds, and each world contains levels. To add content, put a question generator in `src/content/generators.ts`, then add a level to a world in `src/content/basic.ts`, `intermediate.ts` or `advanced.ts`. Levels unlock in order across tiers.
+
 ## Tech
 
 React Native (Expo), TypeScript, the built-in Animated API, AsyncStorage for progress, Expo Haptics.
